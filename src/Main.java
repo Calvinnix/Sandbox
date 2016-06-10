@@ -13,6 +13,7 @@ public class Main {
         System.out.println("Add 5 + 5 = " + addRecursively(5,5));
         System.out.println("Add 0 + 3 = " + addRecursively(0,3));
 
+        System.out.println();
 
         exampleTemplateMethod(new String[5]);
         exampleTemplateMethod(new Integer[5]);
@@ -23,18 +24,33 @@ public class Main {
         exampleTemplateMethod(new Long[5]);
         exampleTemplateMethod(new Character[5]);
 
+        System.out.println();
 
-        Integer [] intArray = createRandomIntArray(10);
+        int ARRAY_SIZE = 10000;
 
-        Integer[] insertionSortedArray = insertionSort(intArray);
-        displayArray(insertionSortedArray);
-        selectionSort(intArray);
-        bubbleSort(intArray);
-        mergeSort(intArray);
-        shellSort(intArray);
-        heapSort(intArray);
-        quickSort(intArray);
-        quickSort3(intArray);
+        Integer [] intArray0 = createRandomIntArray(ARRAY_SIZE);
+        Integer[] insertionSortedArray = insertionSort(intArray0);
+        //displayArray(insertionSortedArray);
+
+        Integer [] intArray1 = createRandomIntArray(ARRAY_SIZE);
+        Integer[] selectionSortedArray = selectionSort(intArray1);
+        //displayArray(selectionSortedArray);
+
+        Integer [] intArray2 = createRandomIntArray(ARRAY_SIZE);
+        Integer[] bubbleSortedArray = bubbleSort(intArray2);
+        //displayArray(bubbleSortedArray);
+
+        Integer [] intArray3 = createRandomIntArray(ARRAY_SIZE);
+        Integer[] shellSortedArray = shellSort(intArray3);
+        //displayArray(shellSortedArray);
+
+        Integer [] intArray4 = createRandomIntArray(10);
+        Integer[] mergeSortedArray = mergeSort(intArray4);
+        displayArray(mergeSortedArray);
+
+        //heapSort(intArray);
+        //quickSort(intArray);
+        //quickSort3(intArray);
 
 
 
@@ -86,7 +102,7 @@ public class Main {
 
     public static Integer[] insertionSort(Integer[] array) {
 
-        long startTime = System.nanoTime();
+        long startTime = System.currentTimeMillis();
 
         for (int i = 0; i < array.length; i++) {
             //loop through the entire array
@@ -104,79 +120,111 @@ public class Main {
             array[j+1] = temp;
         }
 
-        long endTime = System.nanoTime();
-        System.out.println("InsertionSort took " + (endTime - startTime) + " nanoseconds.");
+        long endTime = System.currentTimeMillis();
+        System.out.println("InsertionSort took " + (endTime - startTime) + " milliseconds.");
 
         return array;
     }
 
     public static Integer[] selectionSort(Integer[] array) {
-        long startTime = System.nanoTime();
+        long startTime = System.currentTimeMillis();
 
-        //TODO: implement
+        for (int i = 0; i < array.length; i++) {
+            int index = i;
+            for (int j = index+1; j < array.length; j++) {
+                if (array[j] < array[index]) {
+                    index = j;
+                }
+            }
+            //Swap the elements
+            int temp = array[i];
+            array[i] = array[index];
+            array[index] = temp;
+        }
 
-        long endTime = System.nanoTime();
-        System.out.println("selectionSort took " + (endTime - startTime) + " nanoseconds.");
+        long endTime = System.currentTimeMillis();
+        System.out.println("selectionSort took " + (endTime - startTime) + " milliseconds.");
         return array;
     }
 
     public static Integer[] bubbleSort(Integer[] array) {
-        long startTime = System.nanoTime();
+        long startTime = System.currentTimeMillis();
 
-        //TODO: implement
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 1; j < array.length - i; j++)
+            if (array[j-1] > array[j]) {
+                //Swap the elements
+                int temp = array[j];
+                array[j] = array[j - 1];
+                array[j - 1] = temp;
+            }
+        }
 
-        long endTime = System.nanoTime();
-        System.out.println("bubbleSort took " + (endTime - startTime) + " nanoseconds.");
+        long endTime = System.currentTimeMillis();
+        System.out.println("bubbleSort took " + (endTime - startTime) + " milliseconds.");
         return array;
     }
 
     public static Integer[] shellSort(Integer[] array) {
-        long startTime = System.nanoTime();
+        long startTime = System.currentTimeMillis();
 
-        //TODO: implement
+        //int [] iterators = { 121, 40, 13, 4, 1 };
+        int [] iterators = { 5, 4, 3, 2, 1 };
 
-        long endTime = System.nanoTime();
-        System.out.println("shellSort took " + (endTime - startTime) + " nanoseconds.");
+        for (int it : iterators) {
+            for (int i = 0; i < array.length; i = i + it ) {
+                Integer temp = array[i];
+                int j;
+                for (j = i - 1; j >= 0 && temp < array[j]; j--) {
+                    //swap values
+                    array[j + 1] = array[j];
+                }
+                array[j + 1] = temp;
+            }
+        }
+
+        long endTime = System.currentTimeMillis();
+        System.out.println("shellSort took " + (endTime - startTime) + " milliseconds.");
         return array;
     }
 
     public static Integer[] mergeSort(Integer[] array) {
-        long startTime = System.nanoTime();
+        long startTime = System.currentTimeMillis();
 
         //TODO: implement
 
-        long endTime = System.nanoTime();
-        System.out.println("mergeSort took " + (endTime - startTime) + " nanoseconds.");
+        long endTime = System.currentTimeMillis();
+        System.out.println("mergeSort took " + (endTime - startTime) + " milliseconds.");
         return array;
     }
 
     public static Integer[] heapSort(Integer[] array) {
-        long startTime = System.nanoTime();
+        long startTime = System.currentTimeMillis();
 
         //TODO: implement
 
-        long endTime = System.nanoTime();
-        System.out.println("heapSort took " + (endTime - startTime) + " nanoseconds.");
+        long endTime = System.currentTimeMillis();
+        System.out.println("heapSort took " + (endTime - startTime) + " milliseconds.");
         return array;
     }
 
     public static Integer[] quickSort(Integer[] array) {
-        long startTime = System.nanoTime();
+        long startTime = System.currentTimeMillis();
 
         //TODO: implement
 
-        long endTime = System.nanoTime();
-        System.out.println("quickSort took " + (endTime - startTime) + " nanoseconds.");
+        long endTime = System.currentTimeMillis();
+        System.out.println("quickSort took " + (endTime - startTime) + " milliseconds.");
         return array;
     }
 
     public static Integer[] quickSort3(Integer[] array) {
-        long startTime = System.nanoTime();
+        long startTime = System.currentTimeMillis();
 
         //TODO: implement
 
-        long endTime = System.nanoTime();
-        System.out.println("quickSort3 took " + (endTime - startTime) + " nanoseconds.");
+        long endTime = System.currentTimeMillis();
+        System.out.println("quickSort3 took " + (endTime - startTime) + " milliseconds.");
         return array;
     }
 
