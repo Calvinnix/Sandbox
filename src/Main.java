@@ -1,4 +1,3 @@
-import com.sun.tools.classfile.Method;
 
 import java.util.Random;
 
@@ -26,7 +25,7 @@ public class Main {
 
         System.out.println();
 
-        int ARRAY_SIZE = 100000;
+        int ARRAY_SIZE = 10000;
 
         Integer [] intArray0 = createRandomIntArray(ARRAY_SIZE);
         Integer[] insertionSortedArray = insertionSort(intArray0);
@@ -59,6 +58,10 @@ public class Main {
         Integer [] intArray7 = createRandomIntArray(ARRAY_SIZE);
         Integer[] quickSorted3Array = quickSort3(intArray7);
         //displayArray(quickSorted3Array);
+
+        int a = 4;
+        int b = 10;
+        swapWithoutTemp(a, b);
 
 
 
@@ -403,5 +406,23 @@ public class Main {
     }
 
     //quickSort3 ends here
+
+    private static void swapWithoutTemp(int a, int b) {
+        System.out.println("\nswapWithoutTemp(a = "+a+", b = "+b+");");
+        // swap using xor
+        a = b ^ a;
+        b = b ^ a;
+        a = b ^ a;
+
+        /*
+        a = b - a;
+        b = b - a;
+        a = b + a; */
+
+        System.out.print("Result:  ");
+        System.out.print("a = " + a + "\t");
+        System.out.println("b = " + b);
+    }
+
 
 }
