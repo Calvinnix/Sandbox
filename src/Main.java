@@ -26,7 +26,7 @@ public class Main {
 
         System.out.println();
 
-        int ARRAY_SIZE = 10000;
+        int ARRAY_SIZE = 100000;
 
         Integer [] intArray0 = createRandomIntArray(ARRAY_SIZE);
         Integer[] insertionSortedArray = insertionSort(intArray0);
@@ -44,13 +44,21 @@ public class Main {
         Integer[] shellSortedArray = shellSort(intArray3);
         //displayArray(shellSortedArray);
 
-        Integer [] intArray4 = createRandomIntArray(10);
+        Integer [] intArray4 = createRandomIntArray(ARRAY_SIZE);
         Integer[] mergeSortedArray = mergeSort(intArray4);
-        displayArray(mergeSortedArray);
+        //displayArray(mergeSortedArray);
 
-        //heapSort(intArray);
-        //quickSort(intArray);
-        //quickSort3(intArray);
+        Integer [] intArray5 = createRandomIntArray(ARRAY_SIZE);
+        Integer[] heapSortedArray = heapSort(intArray5);
+        //displayArray(heapSortedArray);
+
+        Integer [] intArray6 = createRandomIntArray(ARRAY_SIZE);
+        Integer[] quickSortedArray = quickSort(intArray6);
+        //displayArray(quickSortedArray);
+
+        Integer [] intArray7 = createRandomIntArray(ARRAY_SIZE);
+        Integer[] quickSorted3Array = quickSort3(intArray7);
+        //displayArray(quickSorted3Array);
 
 
 
@@ -188,44 +196,212 @@ public class Main {
         return array;
     }
 
+    //MergeSort Starts here
+
+    /**
+     * This method is the wrapper for the real mergeSort to avoid over complexity when calling method
+     */
     public static Integer[] mergeSort(Integer[] array) {
         long startTime = System.currentTimeMillis();
 
-        //TODO: implement
+        Integer[] tmp = new Integer[array.length];
+        mergeSort(array, tmp, 0, array.length - 1);
 
         long endTime = System.currentTimeMillis();
         System.out.println("mergeSort took " + (endTime - startTime) + " milliseconds.");
         return array;
     }
 
+    private static void mergeSort(Integer[] array, Integer[] tmp, int left, int right) {
+        if (left < right) {
+            int center = (left + right) / 2;
+            mergeSort(array, tmp, left, center);
+            mergeSort(array, tmp, center + 1, right);
+            merge(array, tmp, left, center + 1, right);
+        }
+    }
+
+    private static void merge(Integer [] array, Integer [] tmp, int left, int right, int rightEnd) {
+        int leftEnd = right - 1;
+        int k = left;
+        int num = rightEnd - left + 1;
+
+        while (left <= leftEnd && right <= rightEnd) {
+            if(array[left].compareTo(array[right]) <= 0) {
+                tmp[k++] = array[left++];
+            } else {
+                tmp[k++] = array[right++];
+            }
+        }
+
+        while (left <= leftEnd) {
+            tmp[k++] = array[left++];
+        }
+
+        while (right <= rightEnd) {
+            tmp[k++] = array[right++];
+        }
+
+        for (int i = 0; i < num; i++, rightEnd--) {
+            array[rightEnd] = tmp[rightEnd];
+        }
+    }
+
+
+    //MergeSort ends here
+
+    //Heapsort starts here
+
     public static Integer[] heapSort(Integer[] array) {
         long startTime = System.currentTimeMillis();
 
-        //TODO: implement
+        int N = array.length;
+        for (int k = N/2; k >= 1; k--) {
+            sink(array, k, N);
+        }
+        while (N > 1) {
+            exch(array, 1, N--);
+            sink(array, 1, N);
+        }
 
         long endTime = System.currentTimeMillis();
         System.out.println("heapSort took " + (endTime - startTime) + " milliseconds.");
         return array;
     }
 
+    private static void sink(Integer [] array, int k, int N) {
+        while (2*k <= N) {
+            int j = 2*k;
+            if ( j < N && less(array, j, j+1)) {
+                j++;
+            }
+            if (!less(array, k, j)) {
+                break;
+            }
+            exch(array, k, j);
+            k = j;
+        }
+    }
+
+    private static boolean less(Integer[] array, int i, int j) {
+        return array[i-1].compareTo(array[j-1]) < 0;
+    }
+
+    private static void exch(Integer[] array, int i, int j) {
+        Integer swap = array[i-1];
+        array[i-1] = array[j-1];
+        array[j-1] = swap;
+    }
+
+    //heapsort ends here
+
+    //quicksort starts here
+
     public static Integer[] quickSort(Integer[] array) {
         long startTime = System.currentTimeMillis();
 
-        //TODO: implement
+        quickSort(array, 0, array.length - 1);
 
         long endTime = System.currentTimeMillis();
         System.out.println("quickSort took " + (endTime - startTime) + " milliseconds.");
         return array;
     }
 
+    private static void quickSort(Integer[] array, int lo, int hi) {
+        if (hi <= lo) {
+            return;
+        }
+        int j = partition(array, lo, hi);
+        quickSort(array, lo, j-1);
+        quickSort(array, j+1, hi);
+    }
+
+    private static int partition(Integer[] array, int lo, int hi) {
+        int i = lo;
+        int j = hi + 1;
+        Integer v = array[lo];
+
+        while (true) {
+            while (less_q(array[++i], v)) {
+                if (i == hi) {
+                    break;
+                }
+            }
+            while (less_q(v, array[--j])) {
+                if ( j == lo) {
+                    break;
+                }
+            }
+            if ( i >= j) {
+                break;
+            }
+
+            exch_q(array, i, j);
+        }
+
+        exch_q(array, lo, j);
+
+
+        return j;
+    }
+
+    private static boolean less_q(Integer v, Integer w) {
+        return v.compareTo(w) < 0;
+    }
+
+    private static void exch_q(Integer[] array, int i, int j) {
+        Integer swap = array[i];
+        array[i] = array[j];
+        array[j] = swap;
+    }
+
+    //quicksort ends here
+
+    //quickSort3 starts here
+
     public static Integer[] quickSort3(Integer[] array) {
         long startTime = System.currentTimeMillis();
 
-        //TODO: implement
+        quickSort3(array, 0, array.length - 1);
 
         long endTime = System.currentTimeMillis();
         System.out.println("quickSort3 took " + (endTime - startTime) + " milliseconds.");
         return array;
     }
+
+    public static void quickSort3(Integer[] array, int lo, int hi) {
+        if (hi <= lo) {
+            return;
+        }
+        int lt = lo;
+        int gt = hi;
+
+        Integer v = array[lo];
+
+        int i = lo;
+
+        while (i <= gt) {
+            int cmp = array[i].compareTo(v);
+            if (cmp < 0) {
+                exch_q3(array, lt++, i++);
+            } else if (cmp > 0) {
+                exch_q3(array, i, gt--);
+            } else {
+                i++;
+            }
+        }
+
+        quickSort3(array, lo, lt-1);
+        quickSort3(array, gt+1, hi);
+
+    }
+
+    private static void exch_q3(Integer[] array, int i, int j) {
+        Integer swap = array[i];
+        array[i] = array[j];
+        array[j] = swap;
+    }
+
+    //quickSort3 ends here
 
 }
