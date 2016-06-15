@@ -1,4 +1,6 @@
 
+
+
 import java.util.Random;
 
 public class Main {
@@ -69,6 +71,13 @@ public class Main {
         System.out.println("6, 3:  " + findBiggerValue(d, c)); // first value is bigger
         System.out.println("3, 3:  " + findBiggerValue(c, c)); // first and second are equal
 
+        int val1 = 0;
+        int val2 = 7116;
+        int val3 = 9319;
+        System.out.println();
+        System.out.println(val1 + " = " + convertIntToEnglish(val1));
+        System.out.println(val2 + " = " + convertIntToEnglish(val2));
+        System.out.println(val3 + " = " + convertIntToEnglish(val3));
 
     }
 
@@ -440,6 +449,82 @@ public class Main {
                                                // NOTE: the first value will never be subtracted by a positive number.
         //System.out.println("result * difference = " + (result * difference));
         return max;
+    }
+
+    private static String convertIntToEnglish(int val) {
+        /**
+         * Not compatible for ints bigger than 9,999
+         */
+
+        if (val == 0) {
+            return "Zero";
+        }
+
+        String result = "";
+        String valToString = Integer.toString(val);
+
+        int counter = valToString.length() - 1;
+
+        for (int i = 0; i < valToString.length(); i++) {
+
+            if (counter == 1) {
+                //tenth place - special naming e.g. forty, fifty
+                switch (valToString.charAt(i)) {
+                    case '0': break;
+                    case '1': switch (valToString.charAt(i+1)) {
+                        case '0': break;
+                        case '1': return result + "Eleven";
+                        case '2': return result + "Twelve";
+                        case '3': return result + "Thirteen";
+                        case '4': return result + "Fourteen";
+                        case '5': return result + "Fifteen";
+                        case '6': return result + "Sixteen";
+                        case '7': return result + "Seventeen";
+                        case '8': return result + "Eighteen";
+                        case '9': return result + "Nineteen";
+                        default: result = "Something went wrong: Error 2" + result; break;
+                    }
+
+                        result = result+"teen";     break;
+                    case '2': result = result + "Twenty-";  break;
+                    case '3': result = result + "Thirty-";  break;
+                    case '4': result = result + "Forty-";   break;
+                    case '5': result = result + "Fifty-";   break;
+                    case '6': result = result + "Sixty-";   break;
+                    case '7': result = result + "Seventy-"; break;
+                    case '8': result = result + "Eighty-";  break;
+                    case '9': result = result + "Ninety-";  break;
+                    default: result = "Something went wrong: Error 1" + result; break;
+                }
+            } else {
+                switch (valToString.charAt(i)) {
+                    case '0': break;
+                    case '1': result = result + "One";   break;
+                    case '2': result = result + "Two";   break;
+                    case '3': result = result + "Three"; break;
+                    case '4': result = result + "Four";  break;
+                    case '5': result = result + "Five";  break;
+                    case '6': result = result + "Six";   break;
+                    case '7': result = result + "Seven"; break;
+                    case '8': result = result + "Eight"; break;
+                    case '9': result = result + "Nine";  break;
+                    default: result = "Something went wrong: Error 2" + result; break;
+                }
+
+                switch (counter) {
+                    case 0: break;
+                    case 1: result = "This should have never happened" + result; break; //should never happen due to separate if condition
+                    case 2: result = result + " Hundred ";  break;
+                    case 3: result = result + " Thousand "; break;
+                }
+            }
+
+            counter--; // decrement the counter
+
+        }
+
+
+        return result;
     }
 
 
