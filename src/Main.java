@@ -79,6 +79,11 @@ public class Main {
         System.out.println(val2 + " = " + convertIntToEnglish(val2));
         System.out.println(val3 + " = " + convertIntToEnglish(val3));
 
+        int val4 = 2000;
+        System.out.println();
+        System.out.println("The number of 2s from 0 to " + val4 + " = " + count2s(val4));
+
+
     }
 
     public static int addIteratively(int x, int y) {
@@ -524,6 +529,22 @@ public class Main {
         }
 
 
+        return result;
+    }
+
+    private static int count2s(int val) {
+
+        int result = 0;
+        int temp;
+        for (int i = 0; i <= val; i++) {
+            temp = i;
+            while (temp > 0) {
+                if (temp % 10 == 2) {
+                   result++;
+                }
+                temp /= 10;
+            }
+        }
         return result;
     }
 
