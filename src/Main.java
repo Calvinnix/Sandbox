@@ -63,6 +63,11 @@ public class Main {
         int b = 10;
         swapWithoutTemp(a, b);
 
+        int c = 3;
+        int d = 6;
+        System.out.println("3, 6:  " + findBiggerValue(c, d)); // first value is smaller
+        System.out.println("6, 3:  " + findBiggerValue(d, c)); // first value is bigger
+        System.out.println("3, 3:  " + findBiggerValue(c, c)); // first and second are equal
 
 
     }
@@ -423,6 +428,21 @@ public class Main {
         System.out.print("a = " + a + "\t");
         System.out.println("b = " + b);
     }
+
+    private static int findBiggerValue(int first, int second) {
+
+        int difference = first - second; //get difference between the 2 values
+        int result = (difference >> 31) & 0x1; // Check the signed bit
+                                               // if result = 0 the first value was bigger,
+                                               // else the second value is bigger (except if they're equal)
+        int max = first - result * difference; // subtract the first value by the result (0 or 1) multiplied
+                                               // by the difference e.g. -3 or 3
+                                               // NOTE: the first value will never be subtracted by a positive number.
+        //System.out.println("result * difference = " + (result * difference));
+        return max;
+    }
+
+
 
 
 }
