@@ -1,7 +1,11 @@
 
 
 
-import java.util.Random;
+import com.sun.corba.se.impl.orbutil.graph.Graph;
+import com.sun.corba.se.impl.orbutil.graph.Node;
+import com.sun.corba.se.impl.orbutil.graph.NodeData;
+
+import java.util.*;
 
 public class Main {
 
@@ -103,6 +107,40 @@ public class Main {
                 (System.currentTimeMillis() - startTime) + "ms\n" +
                 "for " + val5 + " values.");
 
+        //Create nodes
+        GraphNode gnA = new GraphNode('A');
+        GraphNode gnB = new GraphNode('B');
+        GraphNode gnC = new GraphNode('C');
+        GraphNode gnD = new GraphNode('D');
+        GraphNode gnE = new GraphNode('E');
+        GraphNode gnF = new GraphNode('F');
+
+        //Create graph / Add nodes / Create edges
+        Graph graph = new Graph();
+        graph.addNode(gnA);
+        graph.addNode(gnB);
+        graph.addNode(gnC);
+        graph.addNode(gnD);
+        graph.addNode(gnE);
+        graph.addNode(gnF);
+        graph.setRootNode(gnA);
+
+        graph.connectNode(gnA, gnB);
+        graph.connectNode(gnA, gnC);
+        graph.connectNode(gnA, gnD);
+
+        graph.connectNode(gnB, gnE);
+        graph.connectNode(gnB, gnF);
+
+        graph.connectNode(gnC, gnF);
+
+        System.out.println();
+        System.out.println("Breadth-First Search of graph:   ");
+        graph.breadthFirstSearch();
+
+        System.out.println();
+        System.out.println("Depth-First Search of graph:   ");
+        graph.depthFirstSearch();
 
     }
 
@@ -589,6 +627,115 @@ public class Main {
         return a + b;
     }
 
+    public static class GraphNode {
+        private char data;
+        boolean visited = false;
+        GraphNode(char data) {
+            this.data = data;
+        }
+    }
+
+    public static class Graph {
+        private GraphNode rootNode;
+        public ArrayList<GraphNode> nodes = new ArrayList<>();
+        public int[][] adjMatrix; //This is how edges are represented
+        private int size = 0; //init to 0
+
+        public void setRootNode(GraphNode node) {
+            this.rootNode = node;
+        }
+
+        public GraphNode getRootNode() {
+            return this.rootNode;
+        }
+
+        public void addNode(GraphNode node) {
+            nodes.add(node);
+        }
+
+        public void connectNode(GraphNode start, GraphNode end) {
+            if (adjMatrix == null) {
+                this.size = nodes.size();
+                adjMatrix = new int[size][size];
+            }
+
+            int startIndex = nodes.indexOf(start);
+            int endIndex = nodes.lastIndexOf(end);
+            adjMatrix[startIndex][endIndex] = 1;
+            adjMatrix[endIndex][startIndex] = 1;
+        }
+
+        private GraphNode getUnvisitedChildren(GraphNode node) {
+            int index = nodes.indexOf(node);
+            for (int i = 0; i < this.size; i++) {
+                if (adjMatrix[index][i] == 1 && adjMatrix[i][index] == 1) {
+                    return nodes.get(i);
+                }
+            }
+            return null;
+        }
+
+        public void breadthFirstSearch() {
+            Queue<GraphNode> queue = new LinkedList<>();
+            queue.add(this.rootNode);
+            this.rootNode.visited = true;
+            printNode(rootNode);
+
+            while (!queue.isEmpty()) {
+                GraphNode node = queue.remove();
+                GraphNode child = null;
+
+                while ((child=getUnvisitedChildren(node)) != null) {
+                    child.visited = true;
+                    printNode(child);
+                    queue.add(child);
+                }
+            }
+
+            clearNodes(); //Clears the visited properties of the nodes
+
+        }
+
+        public void depthFirstSearch() {
+            Stack<GraphNode> stack = new Stack<>();
+            stack.push(this.rootNode);
+            this.rootNode.visited = true;
+            printNode(rootNode);
+
+            while (!stack.isEmpty()) {
+                GraphNode node = stack.peek();
+                GraphNode child = getUnvisitedChildren(node);
+
+                if (child != null) {
+                    child.visited = true;
+                    printNode(child);
+                    stack.push(child);
+                } else {
+                    stack.pop();
+                }
+            }
+
+            clearNodes(); //Clears the visited properties of the nodes
+
+        }
+
+        private void clearNodes() {
+
+            for (int i = 0; i < size; i++) {
+                GraphNode node = nodes.get(i);
+                node.visited = false;
+            }
+        }
+
+        private void printNode(GraphNode node) {
+            System.out.print(node.data + " ");
+        }
+
+    }
+
 
 
 }
+
+
+
