@@ -83,16 +83,25 @@ public class Main {
         System.out.println();
         System.out.println("The number of 2s from 0 to " + val4 + " = " + count2s(val4));
 
-        int val5 = 30;
+
+        int val5 = 25;
+
         System.out.println();
         System.out.println(val5 + " values of the fibonacci sequence");
         long startTime = System.currentTimeMillis();
-        for (int i = 0; i < val5; i++) {
-            System.out.print(fibonacci(i) + " ");
-        }
+        System.out.print("Fibonacci value at " + val5 + " = " + fibonacci(val5));
         System.out.println("\nExponential fibonacci method took " +
                             (System.currentTimeMillis() - startTime) + "ms\n" +
                                 "for " + val5 + " values.");
+
+
+        System.out.println();
+        System.out.println(val5 + " values of the fibonacci sequence");
+        startTime = System.currentTimeMillis();
+        System.out.print("Fibonacci value at " + val5 + " = " + fibonacciMemoization(val5));
+        System.out.println("\nLinear fibonacci method took " +
+                (System.currentTimeMillis() - startTime) + "ms\n" +
+                "for " + val5 + " values.");
 
 
     }
@@ -561,11 +570,25 @@ public class Main {
 
     private static int fibonacci(int val) {
         //2^n time (exponential time / not very good)
-        if (val <= 1) {
-            return 1;
+        if (val == 0 || val == 1) {
+            return val;
         }
         return (fibonacci(val - 2) + fibonacci( val - 1 ));
     }
+
+    private static int fibonacciMemoization(int val) {
+        //n time (linear)
+        int a = 0;
+        int b = 1;
+
+        for (int i = 2; i < val; i++) {
+            int sum = a + b;
+            a = b;
+            b = sum;
+        }
+        return a + b;
+    }
+
 
 
 }
