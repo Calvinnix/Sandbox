@@ -142,6 +142,8 @@ public class Main {
         System.out.println("Depth-First Search of graph:   ");
         graph.depthFirstSearch();
 
+        System.out.println();
+
     }
 
     public static int addIteratively(int x, int y) {
@@ -660,7 +662,7 @@ public class Main {
             }
 
             int startIndex = nodes.indexOf(start);
-            int endIndex = nodes.lastIndexOf(end);
+            int endIndex = nodes.indexOf(end);
             adjMatrix[startIndex][endIndex] = 1;
             adjMatrix[endIndex][startIndex] = 1;
         }
@@ -668,7 +670,7 @@ public class Main {
         private GraphNode getUnvisitedChildren(GraphNode node) {
             int index = nodes.indexOf(node);
             for (int i = 0; i < this.size; i++) {
-                if (adjMatrix[index][i] == 1 && adjMatrix[i][index] == 1) {
+                if (adjMatrix[index][i] == 1 && nodes.get(i).visited == false) {
                     return nodes.get(i);
                 }
             }
@@ -685,7 +687,7 @@ public class Main {
                 GraphNode node = queue.remove();
                 GraphNode child = null;
 
-                while ((child=getUnvisitedChildren(node)) != null) {
+                while ((child = getUnvisitedChildren(node)) != null) {
                     child.visited = true;
                     printNode(child);
                     queue.add(child);
