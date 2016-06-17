@@ -83,6 +83,17 @@ public class Main {
         System.out.println();
         System.out.println("The number of 2s from 0 to " + val4 + " = " + count2s(val4));
 
+        int val5 = 30;
+        System.out.println();
+        System.out.println(val5 + " values of the fibonacci sequence");
+        long startTime = System.currentTimeMillis();
+        for (int i = 0; i < val5; i++) {
+            System.out.print(fibonacci(i) + " ");
+        }
+        System.out.println("\nExponential fibonacci method took " +
+                            (System.currentTimeMillis() - startTime) + "ms\n" +
+                                "for " + val5 + " values.");
+
 
     }
 
@@ -548,7 +559,13 @@ public class Main {
         return result;
     }
 
-
+    private static int fibonacci(int val) {
+        //2^n time (exponential time / not very good)
+        if (val <= 1) {
+            return 1;
+        }
+        return (fibonacci(val - 2) + fibonacci( val - 1 ));
+    }
 
 
 }
