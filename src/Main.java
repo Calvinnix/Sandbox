@@ -143,6 +143,21 @@ public class Main {
         graph.depthFirstSearch();
 
         System.out.println();
+        System.out.println();
+
+        Node<Integer> head = new Node<>(5);
+        Node<Integer> node1 = new Node<>(1);
+        Node<Integer> node2 = new Node<>(2);
+        Node<Integer> node3 = new Node<>(3);
+        Node<Integer> node4 = new Node<>(4);
+
+        MyLinkedList myLinkedList = new MyLinkedList(head);
+        myLinkedList.add(node1);
+        myLinkedList.add(node2);
+        myLinkedList.add(node3);
+        myLinkedList.add(node4);
+
+        System.out.println("myLinkedList = " + myLinkedList.toString());
 
     }
 
@@ -732,6 +747,61 @@ public class Main {
         private void printNode(GraphNode node) {
             System.out.print(node.data + " ");
         }
+
+    }
+
+    public static class Node <T> {
+        private T data;
+        public Node next;
+
+        public Node(T data) {
+            this.data = data;
+        }
+
+        public T getData() {
+            return data;
+        }
+    }
+
+    public static class MyLinkedList {
+        private Node head = null;
+
+        public MyLinkedList(Node head) {
+            this.head = head;
+        }
+
+        public Node getHead() {
+            return head;
+        }
+
+        public void add(Node next) {
+            if (head == null) {
+                head = next;
+                return;
+            }
+            Node iter = head;
+
+            while (iter.next != null) {
+                iter = iter.next;
+            }
+            iter.next = next;
+        }
+
+        @Override
+        public String toString() {
+            if (head == null) {
+                return "The List Is Empty.";
+            }
+            Node   iter   = head;
+            String result = iter.data + " ";
+
+            while (iter.next != null) {
+                iter = iter.next;
+                result += iter.data + " ";
+            }
+            return result;
+        }
+
 
     }
 
