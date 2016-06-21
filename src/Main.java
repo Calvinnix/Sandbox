@@ -145,19 +145,79 @@ public class Main {
         System.out.println();
         System.out.println();
 
-        Node<Integer> head = new Node<>(5);
-        Node<Integer> node1 = new Node<>(1);
-        Node<Integer> node2 = new Node<>(2);
-        Node<Integer> node3 = new Node<>(3);
-        Node<Integer> node4 = new Node<>(4);
-
-        MyLinkedList myLinkedList = new MyLinkedList(head);
-        myLinkedList.add(node1);
-        myLinkedList.add(node2);
-        myLinkedList.add(node3);
-        myLinkedList.add(node4);
+        MyLinkedList<Integer> myLinkedList = new MyLinkedList<>(5);
+        myLinkedList.add(1);
+        myLinkedList.add(2);
+        myLinkedList.add(3);
+        myLinkedList.add(4);
 
         System.out.println("myLinkedList = " + myLinkedList.toString());
+
+        System.out.println("Remove 5");
+        myLinkedList.removeOneInstance(5);
+        System.out.println("myLinkedList = " + myLinkedList.toString());
+
+        System.out.println("Remove 3");
+        myLinkedList.removeOneInstance(3);
+        System.out.println("myLinkedList = " + myLinkedList.toString());
+
+        System.out.println("Remove 4");
+        myLinkedList.removeOneInstance(4);
+        System.out.println("myLinkedList = " + myLinkedList.toString());
+
+        System.out.println("Remove 1");
+        myLinkedList.removeOneInstance(1);
+        System.out.println("myLinkedList = " + myLinkedList.toString());
+
+        System.out.println("Remove 2");
+        myLinkedList.removeOneInstance(2);
+        System.out.println("myLinkedList = " + myLinkedList.toString());
+
+        System.out.println();
+
+        MyLinkedList<String> myStrLinkedList = new MyLinkedList<>("Head!!");
+        myStrLinkedList.add("First added!");
+        myStrLinkedList.add("Second added!");
+        myStrLinkedList.add("Third added!");
+        myStrLinkedList.add("Fourth added!");
+
+        System.out.println("myStrLinkedList = " + myStrLinkedList.toString());
+
+        System.out.println("Remove \"Second added!\"");
+        myStrLinkedList.removeOneInstance("Second added!");
+        System.out.println("myStrLinkedList = " + myStrLinkedList.toString());
+
+        System.out.println();
+        System.out.println();
+
+        /* Polymorphism concepts */
+
+        Animal animal = new Animal();
+        System.out.print("animal.sayHello() = ");
+        animal.sayHello();
+
+        Animal dog = new Dog();
+        System.out.print("dog.sayHello() = ");
+        dog.sayHello();
+
+        Animal cat = new Cat();
+        System.out.print("cat.sayHello() = ");
+        cat.sayHello();
+
+        animal = new Dog();
+        System.out.println("animal casted to Dog()");
+        System.out.print("animal.sayHello() = ");
+        animal.sayHello();
+
+        dog = new Cat();
+        System.out.println("dog casted to Cat()");
+        System.out.print("dog.sayHello() = ");
+        dog.sayHello();
+
+        System.out.println();
+        System.out.println();
+
+
 
     }
 
@@ -763,10 +823,11 @@ public class Main {
         }
     }
 
-    public static class MyLinkedList {
+    public static class MyLinkedList <T> {
         private Node head = null;
 
-        public MyLinkedList(Node head) {
+        public MyLinkedList(T val) {
+            Node<T> head = new Node<>(val);
             this.head = head;
         }
 
@@ -774,7 +835,8 @@ public class Main {
             return head;
         }
 
-        public void add(Node next) {
+        public void add(T val) {
+            Node<T> next = new Node<>(val);
             if (head == null) {
                 head = next;
                 return;
@@ -787,12 +849,38 @@ public class Main {
             iter.next = next;
         }
 
+        public void removeOneInstance(T val) {
+
+            if (head == null) {
+                return;
+            }
+            if (head.data == val) {
+                head = head.next;
+                return;
+            }
+            Node iter = head;
+            Node prev = null;
+
+            while (iter.next != null) {
+                if (iter.data == val) {
+                    prev.next = iter.next;
+                    return;
+                }
+                prev = iter;
+                iter = iter.next;
+            }
+            if (iter.data == val) {
+                prev.next = null;
+            }
+
+        }
+
         @Override
         public String toString() {
             if (head == null) {
                 return "The List Is Empty.";
             }
-            Node   iter   = head;
+            Node iter   = head;
             String result = iter.data + " ";
 
             while (iter.next != null) {
@@ -803,6 +891,30 @@ public class Main {
         }
 
 
+    }
+
+
+    public static class Animal {
+
+        public void sayHello() {
+            System.out.println("Generic noise!");
+        }
+    }
+
+    public static class Dog extends Animal {
+
+        @Override
+        public void sayHello() {
+            System.out.println("WOOF!");
+        }
+    }
+
+    public static class Cat extends Animal {
+
+        @Override
+        public void sayHello() {
+            System.out.println("MEOW!");
+        }
     }
 
 
