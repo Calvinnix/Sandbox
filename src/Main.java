@@ -4,6 +4,7 @@
 import com.sun.corba.se.impl.orbutil.graph.Graph;
 import com.sun.corba.se.impl.orbutil.graph.Node;
 import com.sun.corba.se.impl.orbutil.graph.NodeData;
+import com.sun.corba.se.impl.util.PackagePrefixChecker;
 
 import java.util.*;
 
@@ -217,6 +218,162 @@ public class Main {
         System.out.println();
         System.out.println();
 
+        System.out.println("Stack created with linked list");
+        MyStack<Integer> stack = new MyStack<>(5);
+        System.out.println("size of stack is " + stack.size() );
+        System.out.println("popped value is " + stack.pop() );
+        System.out.println("size of stack is " + stack.size() );
+        stack.push(1);
+        stack.push(2);
+        stack.push(3);
+        stack.push(4);
+        System.out.println("size of stack is " + stack.size() );
+
+        stack.insertAfter(3, 10);
+        stack.insertAfter(10, 100);
+        stack.insertAfter(4, 1000);
+        stack.insertAfter(1, 10000);
+
+
+        System.out.println(stack.toString());
+        System.out.println(stack.delete(4));
+        System.out.println(stack.toString());
+        System.out.println(stack.delete(2));
+        System.out.println(stack.toString());
+        System.out.println(stack.delete(1));
+        System.out.println(stack.toString());
+
+        System.out.println("popped value is " + stack.pop() );
+        System.out.println(stack.toString());
+
+        System.out.println();
+        System.out.println();
+
+        System.out.println("Binary Tree getHeight question");
+        TreeNode node1 = new TreeNode(1);
+        TreeNode node2 = new TreeNode(2);
+        TreeNode node3 = new TreeNode(3);
+        TreeNode node4 = new TreeNode(4);
+        TreeNode node5 = new TreeNode(5);
+        TreeNode node6 = new TreeNode(6);
+        TreeNode node7 = new TreeNode(7);
+        TreeNode node8 = new TreeNode(8);
+
+        node1.left = node2;
+        node1.right = node3;
+        node2.left = node4;
+        node2.right = node5;
+        node3.left = node6;
+        node3.right = node7;
+        node4.right = node8;
+
+        BinaryTree binaryTree = new BinaryTree(node1);
+        System.out.println("Binary Tree height is " + binaryTree.getHeight());
+
+        System.out.println("Preorder traversal");
+        binaryTree.preorder();
+
+        System.out.println("\nPreorder traversal (No recursion)");
+        binaryTree.preorderNoRecursion();
+
+
+        System.out.println("\nBinary Tree Lowest Common Ancestor question");
+        TreeNode bsnode1 = new TreeNode(5);
+        TreeNode bsnode2 = new TreeNode(3);
+        TreeNode bsnode3 = new TreeNode(7);
+        TreeNode bsnode4 = new TreeNode(1);
+        TreeNode bsnode5 = new TreeNode(4);
+        TreeNode bsnode6 = new TreeNode(6);
+        TreeNode bsnode7 = new TreeNode(8);
+        TreeNode bsnode8 = new TreeNode(2);
+
+        bsnode1.left  = bsnode2;
+        bsnode1.right = bsnode3;
+        bsnode2.left  = bsnode4;
+        bsnode2.right = bsnode5;
+        bsnode3.left  = bsnode6;
+        bsnode3.right = bsnode7;
+        bsnode4.right = bsnode8;
+
+        BinaryTree binarySearchTree = new BinaryTree(bsnode1);
+        System.out.println("\nThe lowest common ancestor of 2 and 8 is : " + binarySearchTree.findLowestCommonFactor(2, 8));
+        System.out.println("The lowest common ancestor of 2 and 4 is : " + binarySearchTree.findLowestCommonFactor(2, 4));
+        System.out.println("The lowest common ancestor of 6 and 8 is : " + binarySearchTree.findLowestCommonFactor(6, 8));
+
+        System.out.println();
+        System.out.println();
+
+        System.out.println("Find first nonrepeatedchar question");
+
+        System.out.println("Hello = " + findFirstNonRepeatedChar("Hello"));
+        System.out.println("Goodbye = " + findFirstNonRepeatedChar("Goodbye"));
+        System.out.println("Helloh = " + findFirstNonRepeatedChar("Helloh"));
+        System.out.println("GoodbyeG = " + findFirstNonRepeatedChar("GoodbyeG"));
+
+        System.out.println();
+        System.out.println();
+
+        System.out.println("removeChars question");
+        System.out.println("\"Hello this is a sentence\" with \"e\" removed = " + removeChars("Hello this is a sentence", "e"));
+
+        System.out.println();
+        System.out.println();
+
+        System.out.println("reverseWords question");
+        System.out.println("\"Hello this is a sentence\" reversed = " + reverseWords("Hello this is a sentence"));
+
+        System.out.println();
+        System.out.println();
+
+        System.out.println("Binary Search (recursive) on sorted int array question");
+        int [] sortedIntArray = { 1, 3, 4, 8, 9, 12, 16, 21, 23 };
+
+        System.out.println("The index of 3 is " + findIndex(sortedIntArray, 3));
+        System.out.println("The index of 1 is " + findIndex(sortedIntArray, 1));
+        System.out.println("The index of 23 is " + findIndex(sortedIntArray, 23));
+        System.out.println("The index of 9 is " + findIndex(sortedIntArray, 9));
+        System.out.println("(Error case) The index of 0 is " + findIndex(sortedIntArray, 0));
+
+        System.out.println();
+        System.out.println();
+
+        System.out.println("Print all permutations of string question");
+        Permutations abcPermutations = new Permutations("abc");
+        System.out.println("Permutations of abc:");
+        abcPermutations.permute();
+
+        System.out.println();
+        System.out.println();
+
+        System.out.println("Print all combinations of string question");
+        Combinations abcCombinations = new Combinations("abc");
+        System.out.println("Combinations of abc:");
+        abcCombinations.combine();
+
+        System.out.println();
+        System.out.println();
+
+        System.out.println("Find number of ones in binary of a number question");
+        System.out.println("Number of ones in 5 (binary) = " + numOnesInBinary(5));
+        System.out.println("Number of ones in 15 (binary) = " + numOnesInBinary(15));
+        System.out.println("Number of ones in 115 (binary) = " + numOnesInBinary(115));
+
+        System.out.println();
+        System.out.println();
+
+        System.out.println("mth to last element in linked list question");
+        MyElementLinkedList<Integer> intLinkedList = new MyElementLinkedList<>(5);
+        intLinkedList.add(12);
+        intLinkedList.add(3);
+        intLinkedList.add(9);
+        intLinkedList.add(2);
+        intLinkedList.add(1);
+        intLinkedList.add(8);
+        System.out.println("intLinkedList = " + intLinkedList);
+        System.out.println("last element int linkedList is : " + intLinkedList.findmthToLastElement(0));
+        System.out.println("6th to last element int linkedList is : " + intLinkedList.findmthToLastElement(6));
+        System.out.println("5th to last element int linkedList is : " + intLinkedList.findmthToLastElement(5));
+        System.out.println("1st to last element int linkedList is : " + intLinkedList.findmthToLastElement(1));
 
 
     }
@@ -918,6 +1075,369 @@ public class Main {
     }
 
 
+    public static class MyElement <T> {
+        public MyElement <T> next;
+        public T data;
+
+        //Might want to make a constructor to initialize
+        //Make data and next private and use constructors
+    }
+
+    public static class MyElementLinkedList <T> {
+        public MyElement <T> head;
+        public MyElementLinkedList (T data) {
+            head = new MyElement<>();
+            head.data = data;
+            head.next = null;
+        }
+        public T findmthToLastElement(int m) {
+            int size = 0;
+            MyElement<T> iter = head;
+            while ( iter.next != null ) {
+                iter = iter.next;
+                size++;
+            }
+            int eleLocation = size - m;
+            iter = head;
+            while (eleLocation > 0 && iter.next != null ) {
+                eleLocation--;
+                iter = iter.next;
+            }
+            return iter.data;
+        }
+        public void add(T nextData) {
+            MyElement<T> iter = head;
+            while (iter.next != null) {
+                iter = iter.next;
+            }
+            MyElement<T> temp = new MyElement<>();
+            iter.next = temp;
+            temp.data = nextData;
+            temp.next = null;
+        }
+        @Override
+        public String toString() {
+            String result = "";
+            MyElement<T> iter = head;
+            result += "[ ";
+            while (iter != null) {
+                result += iter.data + " ";
+                iter = iter.next;
+            }
+            result += "]";
+            return result;
+        }
+
+    }
+
+    public static class MyStack <T> {
+        private MyElement <T> head;
+        private int size = 0;
+
+        public MyStack(T data) {
+            this.head = new MyElement<>();
+            this.head.data = data;
+            this.head.next = null;
+            size++;
+        }
+        public void push (T data) {
+            MyElement newElement = new MyElement();
+            newElement.data = data;
+            newElement.next = this.head;
+            this.head = newElement;
+            size++;
+        }
+        public T pop() {
+            if (head == null) {
+                System.out.println("The stack is empty!!");
+                return null;
+            }
+            T tempData = head.data;
+            this.head = this.head.next;
+            size--;
+            return tempData;
+        }
+        public int size() {
+            return size;
+        }
+        public boolean delete (T value) {
+            if ( head == null) {
+                return false;
+            }
+            MyElement <T> orig = head;
+            MyElement <T> prev = null;
+            while (head != null) {
+                if ( head.data == value) {
+                    size--;
+                    if ( prev == null ) {
+                        //first value
+                        head = head.next;
+                        return true;
+                    }
+                    prev.next = head.next;
+                    head = orig;
+                    return true;
+                }
+                prev = head;
+                head = head.next;
+            }
+            head = orig;
+            return false;
+        }
+
+        public boolean insertAfter(T dataAtPosition, T dataToInsert) {
+            if (head == null) {
+                return false;
+            }
+            MyElement<T> orig = head;
+            while ( head != null ) {
+                if ( head.data == dataAtPosition ) {
+                    MyElement<T> temp = new MyElement<>();
+                    temp.data = dataToInsert;
+                    temp.next = head.next;
+                    head.next = temp;
+                    head = orig;
+                    return true;
+                }
+                head = head.next;
+            }
+            head = orig;
+            return false;
+        }
+
+        @Override
+        public String toString() {
+            MyElement<T> orig = head;
+            String result = "";
+            while (head != null) {
+                if (head.next == null) {
+                    result += head.data;
+                } else {
+                    result += head.data + ", ";
+                }
+                head = head.next;
+            }
+            head = orig;
+            return result;
+        }
+}
+
+    public static class TreeNode {
+        public TreeNode left = null;
+        public TreeNode right = null;
+        private Integer data = null;
+        public TreeNode(Integer value) {
+            this.data = value;
+        }
+        public Integer getData() {
+            return data;
+        }
+    }
+
+    public static class BinaryTree {
+        private TreeNode root = null;
+        public BinaryTree(TreeNode root) {
+            this.root = root;
+        }
+        public TreeNode getRoot() {
+            return root;
+        }
+        public int getHeight() {
+            return getHeight(root);
+        }
+        private int getHeight( TreeNode node ) {
+            if (node == null) {
+                return 0;
+            }
+            return 1 + Math.max(
+                    getHeight(node.left),
+                    getHeight(node.right) );
+        }
+
+        public void preorder() {
+            preorder(root);
+        }
+        private void preorder(TreeNode node) {
+            if (node == null) {
+                return;
+            }
+            System.out.print(node.data + " ");
+            preorder(node.left);
+            preorder(node.right);
+        }
+        public void preorderNoRecursion() {
+            Stack<TreeNode> stack = new Stack<>();
+            stack.push(root);
+            while (!stack.isEmpty()) {
+                TreeNode temp = stack.peek();
+                stack.pop();
+                System.out.print(temp.data + " ");
+                if (temp.right != null) {
+                    stack.push(temp.right);
+                }
+                if (temp.left != null) {
+                    stack.push(temp.left);
+                }
+            }
+        }
+        public Integer findLowestCommonFactor( int val1, int val2 ) {
+            TreeNode iter = this.root;
+            while ( iter != null ) {
+                Integer data = iter.getData();
+                if ( data < val1 && data < val2 ) {
+                    iter = iter.right;
+                } else if ( data > val1 && data > val2 ) {
+                    iter = iter.left;
+                } else {
+                    return iter.getData();
+                }
+            }
+            return null;
+        }
+
+    }
+
+    public static char findFirstNonRepeatedChar( String s ) {
+
+        char c = '\u0000';
+
+        if (s.isEmpty() || s == null) {
+            return c;
+        }
+        s = s.toUpperCase();
+
+        HashMap<Character, Integer> instancesOfChars = new HashMap<>();
+
+        for ( int i = 0; i < s.length(); i++ ) {
+            c = s.charAt(i);
+
+            if (instancesOfChars.containsKey(c)) {
+                instancesOfChars.put(c, instancesOfChars.get(c) + 1);
+            } else {
+                instancesOfChars.put(c, 1); //first value found
+            }
+        }
+        for ( int i = 0; i < s.length(); i++ ) {
+            c = s.charAt(i);
+            if (instancesOfChars.get(c) == 1) {
+                return c;
+            }
+        }
+
+        c = '\u0000';
+        return c;
+    }
+
+    public static String removeChars(String str, String remove) {
+        HashSet<Character> charsToRemove = new HashSet<>();
+        String result = "";
+        char c;
+        for (int i = 0; i < remove.length(); i++) {
+            charsToRemove.add(remove.charAt(i));
+        }
+        for (int i = 0; i < str.length(); i++) {
+            c = str.charAt(i);
+            if ( !charsToRemove.contains( c ) ) {
+                result += c;
+            }
+        }
+        return result;
+    }
+
+    public static String reverseWords( String s ) {
+        if ( s.isEmpty() || s == null) {
+            return s;
+        }
+        String result = "";
+        String [] sArray = s.split(" ");
+        for ( int i = sArray.length - 1; i >= 0; i--) {
+            if ( i == 0 ) {
+                result += sArray[i];
+            } else {
+                result += sArray[i] + " ";
+            }
+        }
+        return result;
+    }
+    public static int findIndex(int[] intArray, int val) {
+        return findIndex(intArray, val, 0, intArray.length);
+    }
+    private static int findIndex(int[] intArray, int val, int lower, int upper) {
+        int middle = (lower + upper) / 2;
+        if (lower == upper) {
+            return -1;
+        }
+
+        if ( intArray[middle] > val ) {
+            return findIndex(intArray, val, lower, middle);
+        } else if ( intArray[middle] < val ) {
+            return findIndex(intArray, val, middle, upper);
+        } else {
+            //intArray[middle] == val
+            return middle;
+        }
+
+    }
+
+    public static class Permutations {
+        private boolean [] used;
+        private StringBuilder out = new StringBuilder();
+        private final String in;
+        public Permutations(final String str) {
+            in = str;
+            used = new boolean[ in.length() ];
+        }
+        public void permute() {
+            if ( out.length() == in.length() ) {
+                System.out.print( out + " ");
+                return;
+            }
+            for ( int i = 0; i < in.length(); i++) {
+                if ( used[i] ) continue;
+                out.append(in.charAt(i));
+                used[i] = true;
+                permute();
+                used[i] = false;
+                out.setLength( out.length() - 1 );
+            }
+        }
+    }
+
+    public static class Combinations {
+        private StringBuilder out = new StringBuilder();
+        private final String in;
+
+        public Combinations(final String str) {
+            in = str;
+        }
+
+        public void combine() {
+            combine(0);
+        }
+
+        private void combine(int start) {
+            for (int i = start; i < in.length(); i++) {
+                out.append(in.charAt(i));
+                System.out.print(out + " ");
+                if (i < in.length()) {
+                    combine(i + 1);
+                }
+                out.setLength(out.length() - 1);
+            }
+        }
+    }
+
+    public static int numOnesInBinary( int num ) {
+        int numOnes = 0;
+        while (num != 0) {
+            if ((num & 1) == 1) {
+                numOnes++;
+            }
+            num = num >>> 1;
+        }
+
+        return numOnes;
+    }
 
 }
 
